@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexthink DEMO Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --nx-dark-blue: #001e3c;
+            --nx-blue-light: #0a325a;
+            --nx-green: #96c93d;
+            --nx-accent-orange: #f39c12;
+            --nx-purple: #6366f1;
+            --nx-slate: #475569;
+            --nx-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-sub: #475569;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: var(--nx-bg);
+            margin: 0;
+            color: var(--text-main);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* --- Header --- */
+        header {
+            background-color: var(--nx-dark-blue);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; }
+        .logo span { color: var(--nx-green); margin-right: 8px; }
+        .logo-sub { font-size: 0.95rem; opacity: 0.8; margin-left: 15px; padding-left: 15px; border-left: 1px solid rgba(255,255,255,0.3); font-weight: 400; }
+
+        /* --- Hero --- */
+        .hero-section {
+            background: linear-gradient(135deg, var(--nx-dark-blue) 0%, var(--nx-blue-light) 100%);
+            color: white;
+            padding: 2.5rem 2rem;
+            text-align: center;
+        }
+        .page-title { font-size: 2.5rem; font-weight: 800; margin: 0 0 0.5rem 0; }
+        .hero-desc { font-size: 1.15rem; color: #cbd5e1; max-width: 1000px; margin: 0 auto; opacity: 0.9; }
+
+        /* --- Tab Navigation --- */
+        .tabs-nav {
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0 2rem;
+            position: sticky;
+            top: 74px; 
+            z-index: 999;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .tab-button {
+            padding: 1rem 1.5rem;
+            border: none;
+            background: none;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-sub);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 4px solid transparent;
+        }
+
+        .tab-button:hover { color: var(--nx-dark-blue); background: rgba(0,0,0,0.02); }
+        .tab-button.active {
+            color: var(--nx-dark-blue);
+            border-bottom-color: var(--nx-green);
+        }
+
+        /* --- Layout Grid --- */
+        main {
+            padding: 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; animation: fadeIn 0.3s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-row-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .card-row-three {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .column-header {
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.6rem;
+        }
+
+        .column-header h2 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin: 0;
+            color: var(--nx-dark-blue);
+            text-transform: uppercase;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+
+        .card-header { padding: 1.1rem 1.4rem; background-color: #fafbfc; border-bottom: 1px solid var(--border-color); }
+        .card-header h3 { margin: 0; font-size: 1rem; font-weight: 700; color: var(--nx-dark-blue); }
+        .card-content { padding: 1.25rem; }
+
+        .highlight-roi { border-top: 7px solid var(--nx-dark-blue); }
+        .highlight-trouble { border-top: 7px solid var(--nx-purple); }
+        .highlight-ops { border-top: 7px solid var(--nx-accent-orange); }
+        .highlight-strategy { border-top: 7px solid var(--nx-green); }
+        .highlight-security { border-top: 7px solid var(--nx-slate); }
+
+        /* --- Link Items --- */
+        .nav-item {
+            display: block;
+            text-decoration: none;
+            padding: 1.1rem 1.3rem;
+            margin-bottom: 0.75rem;
+            border-radius: 10px;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+        .nav-item:hover { background: #f0fdf4; border-color: var(--nx-green); }
+
+        .nav-title { 
+            display: block; 
+            font-weight: 700; 
+            font-size: 1.1rem; 
+            color: var(--nx-dark-blue); 
+            margin-bottom: 0.4rem;
+            white-space: normal; 
+            word-break: break-word;
+        }
+        .nav-desc { display: block; font-size: 0.95rem; color: var(--text-sub); line-height: 1.5; }
+
+        .footnote-link {
+            display: block;
+            text-align: right;
+            margin-top: 4px;
+            font-size: 0.85rem;
+            color: var(--nx-purple);
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .ai-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: white;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: 800;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        footer {
+            margin-top: 4rem;
+            padding: 3rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-sub);
+            font-size: 0.95rem;
+        }
+
+        .admin-link-box { border-top: 7px solid var(--nx-green) !important; }
+        .admin-link-box .nav-title { color: var(--nx-dark-blue) !important; }
+
+        .workflow-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo"><span>Nexthink</span> DEMO Portal <span class="logo-sub">DEX デモ用カスタムポータル (注) 製品のコンソールではありません。</span></div>
+</header>
+
+<div class="hero-section">
+    <h1 class="page-title">Digital Employee Experience</h1>
+    <p class="hero-desc">ITコストの最適化、サポートの自動化、そして戦略的なデジタルガバナンスの実現。Nexthinkが提供する次世代のIT運用管理を体感してください。</p>
+</div>
+
+<nav class="tabs-nav">
+    <button class="tab-button active" onclick="openTab(event, 'sec1')">1. CAPEX/資産管理</button>
+    <button class="tab-button" onclick="openTab(event, 'sec2')">2. 障害対応/分析</button>
+    <button class="tab-button" onclick="openTab(event, 'sec3')">3. ヘルプデスク</button>
+    <button class="tab-button" onclick="openTab(event, 'sec4')">4. 戦略/ガバナンス</button>
+    <button class="tab-button" onclick="openTab(event, 'sec5')">5. セキュリティ</button>
+    <button class="tab-button" onclick="openTab(event, 'sec6')">6. その他</button>
+</nav>
+
+<main>
+    <div id="sec1" class="tab-panel active">
+        <div class="column-header"><h2>1. CAPEX 削減と資産管理</h2></div>
+        <div class="card-row-inner">
+            <div class="card highlight-roi">
+                <div class="card-header"><h3>コスト最適化 (CAPEX削減)</h3></div>
+                <div class="card-content">
+                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/17d070fb-deb4-4573-b33d-ba6ae2c3cd41" class="nav-item" target="_blank">
+                        <span class="nav-title">💻 インテリジェント・ハードウェア交換</span>
+                        <span class="nav-desc">端末の状態を確認し交換可否を判断</span>
+                    </a>
+                    <a href="https://yk141574-creator.github.io/Intelligent_Hardware_Refresh/%E3%82%A4%E3%83%B3%E3%83%86%E3%83%AA%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%83%8F%E3%83%BC%E3%83%89%E3%82%A6%E3%82%A7%E3%82%A2%E4%BA%A4%E6%8F%9B.html" class="nav-item" target="_blank">
+                        <span class="nav-title">🖼️ インテリジェント・ハードウェア交換 (画面キャプチャ)</span>
+                        <span class="nav-desc">端末の状態を確認し交換可否を判断</span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/fe05a910-dfb2-4780-912f-2c9dff39e2dd" class="nav-item" target="_blank">
+                        <span class="nav-title">🧩 ソフトウェア・アセット適正化</span>
+                        <span class="nav-desc">全社的なアプリ利用状況の分析</span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/d8c0ef77-40cb-43d8-b6c1-510cf1b7cc50" class="nav-item" target="_blank">
+                        <span class="nav-title">💸 ソフトウェア・アセット適正化(コスト分析)※英語版</span>
+                        <span class="nav-desc">利用状況に基づいたコスト分析</span>
+                    </a>
+                </div>
+            </div>
+            <div class="card highlight-roi">
+                <div class="card-header"><h3>特定資産詳細と従業員アンケート</h3></div>
+                <div class="card-content">
+                    <a href="https://kanopy-full.us.nexthink.cloud/software-metering/details/474445ec-7273-4fdc-b413-e8b02e169aa0" class="nav-item" target="_blank">
+                        <span class="nav-title">📄 Adobe Acrobat 利用状況 </span>
+                        <span class="nav-desc">有償ライセンスの実際の利用状況精査(低利用時間のユーザも特定)</span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/software-metering/details/fe0e95e6-c4b9-46bf-83fc-8b3640de5967" class="nav-item" target="_blank">
+                        <span class="nav-title">☁️ Microsoft 365 利用状況 </span>
+                        <span class="nav-desc">M365各サービスの実際の利用状況精査(低利用時間のユーザも特定)</span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/engage/bb80e239-e55b-4379-b65d-afa607fbb4af" class="nav-item" target="_blank">
+                        <span class="nav-title">📝 従業員向けアンケート</span>
+                        <span class="nav-desc">(例)資産の棚卸に関する従業員アンケート</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sec2" class="tab-panel">
+        <div class="column-header"><h2>2. 障害対応と分析</h2></div>
+        <div class="card-row-three">
+            <div class="card highlight-trouble">
+                <div class="card-header"><h3>アラートと AI 分析機能</h3></div>
+                <div class="card-content">
+                    <a href="https://kanopy-full.us.nexthink.cloud/alerts/alerts/alert-hub" class="nav-item" target="_blank" >
+                        <span class="nav-title">🔔 アラート・ハブ</span>
+                        <span class="nav-desc">全社規模の障害や体験低下をリアルタイム検知</span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/workspace/home" class="nav-item" target="_blank">
+                        <span class="nav-title">✨ 管理者向け AI Assist <span class="ai-badge">AI Powered</span></span>
+                        <span class="nav-desc">管理者向けの分析支援</span>
+                    </a>
+                </div>
+            </div>
+            <div class="card highlight-trouble">
+                <div class="card-header"><h3>デバイス・ネットワーク診断</h3></div>
+                <div class="card-content">
+                    <a href="https://kanopy-full.us.nexthink.cloud/sup/device/search/KAN-MIAMI-76FL61" class="nav-item" target="_blank" >
+                        <span class="nav-title">📍 デバイス診断(個別) </span>
+                        <span class="nav-desc">特定のデバイスにフォーカスした詳細調査(Device 360°)</span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/a77e5b68-fba3-478c-b1ae-b201867fc71c" class="nav-item" target="_blank" >
+                        <span class="nav-title">📊 デバイス診断(全社)</span>
+                        <span class="nav-desc">デバイスに関連する健全性を包括的に分析</span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/75899dbe-cf66-47a1-82d9-908a7692b61d" class="nav-item" target="_blank">
+                        <span class="nav-title">📱 モバイル診断(全社)</span>
+                        <span class="nav-desc">モバイルデバイスの健全性を包括的に分析</span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/e9424c97-fded-4700-87f8-46dcfa4d8594?context=time.from=7d,time.resolution=1d,v=1&tabId=_0W0vtjD" class="nav-item" target="_blank">
+                        <span class="nav-title">📱 モバイル診断(全社)※最新英語版</span>
+                        <span class="nav-desc">モバイルデバイスの健全性を包括的に分析</span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/d5104647-b108-4f2f-a686-39371e64b087" class="nav-item" target="_blank">
+                        <span class="nav-title">📶 ネットワーク診断①</span>
+                        <span class="nav-desc">ネットワークの健全性を包括的に分析</span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/b724ee19-79e1-4f11-b8c1-7f41939ba0dd" class="nav-item" target="_blank">
+                        <span class="nav-title">🚀 ネットワーク診断②</span>
+                        <span class="nav-desc">ダウンロード・アップロード状況の可視化</span>
+                    </a>
+                </div>
+            </div>
+            <div class="card highlight-trouble">
+                <div class="card-header"><h3>アプリケーション / SaaS 診断</h3></div>
+                <div class="card-content">
+                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/collaboration-tools/f248ccd8-2073-4f80-93a1-ebf555667a07" class="nav-item" target="_blank">
+                        <span class="nav-title">📞 通話品質診断(Teams/Zoom)</span>
+                        <span class="nav-desc">音声途切れや切断の原因の絞り込み</span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/bus/ef3f0d8d-5fa1-4357-843c-19d96b7c7bf0/web/overview" class="nav-item" target="_blank">
+                        <span class="nav-title">🏢 SAP S/4 HANA 診断</span>
+                        <span class="nav-desc">基幹システムの応答速度と分析</span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/bus/fff2c060-6f3f-4908-be80-bd672715c65c/web/overview" class="nav-item" target="_blank">
+                        <span class="nav-title">☁️ Salesforce 診断</span>
+                        <span class="nav-desc">CRMシステムの応答速度と分析</span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/bus/8956872d-4ab8-4242-87a5-85bd818e1faf/desktop/overview" class="nav-item" target="_blank">
+                        <span class="nav-title">✉️ MS Outlook 診断</span>
+                        <span class="nav-desc">クライアントアプリの分析</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sec3" class="tab-panel">
+        <div class="column-header"><h2>3. ヘルプデスクの効率化</h2></div>
+        <div class="card highlight-ops">
+            <div class="card-header"><h3>チケット対応の効率化と自動化</h3></div>
+            <div class="card-content">
+                <a href="https://yk141574-creator.github.io/ITSM/ITSM.html" class="nav-item" target="_blank">
+                    <span class="nav-title">🛠️ チケット対応効率化(MTTR 短縮) </span>
+                    <span class="nav-desc">ITSM から数クリックで診断・修復</span>
+                        <span class="nav-desc">※ 事前に Amplify プラグインの設定と認証が必要 </span>
+
+                </a>
+                <div style="background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:1.1rem; margin-bottom:0.75rem;">
+                    <a href="https://teams.cloud.microsoft/" style="text-decoration:none;" target="_blank">
+                        <span class="nav-title">🤖 従業員向け AI ヘルプデスク (SPARK) <span class="ai-badge">AI Agent</span></span>
+                        <span class="nav-desc">従業員がチャットで問題を自己解決</span>
+                        <span class="nav-desc">※ 事前にデモスクリプト(/startdemojp)の実行が必要</span>
+                    </a>
+                    <a href="https://www.microsoft.com/ja-jp/power-platform/products/power-bi" class="footnote-link" target="_blank">※ Microsoft PowerBI</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sec4" class="tab-panel">
+        <div class="column-header"><h2>4. 戦略とガバナンス</h2></div>
+        <div class="card-row-inner">
+            <div class="card highlight-strategy">
+                <div class="card-header"><h3>生成AIの可視化と促進</h3></div>
+                <div class="card-content">
+                    <a href="https://kanopy-full.us.nexthink.cloud/ai-tools/overview" class="nav-item" target="_blank">
+                        <span class="nav-title">📈 生成AIの利用状況分析</span>
+                        <span class="nav-desc">AIツールの普及度と活用傾向を可視化</span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/ai-tools/4d9a1edf-5c6e-48c6-95f1-f81ec481a587" class="nav-item" target="_blank">
+                        <span class="nav-title">🏢 MS Copilotの利用状況分析</span>
+                        <span class="nav-desc">MS Copilotの普及度と活用傾向を可視化</span>
+                    </a>
+                    <a href="https://kanopy-corp.com/ai/mspilot" class="nav-item" target="_blank">
+                        <span class="nav-title">🔀 認可 AI へのリダイレクトとユーザガイド</span>
+                        <span class="nav-desc">「未認可AI」から「認可AI」へのリダイレクトと使い方ガイド</span>
+                        <span class="nav-desc">※ 事前に Nexthink または Nexthink(Beta) プラグインの設定と認証が必要 </span>
+
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/d35ce4c3-733d-47ab-85e3-6c4e7cc18313?context=time.from=7d,time.resolution=1d,v=1&tabId=edSr3nGB" class="nav-item" target="_blank">
+                        <span class="nav-title">🔍 Shadow AI 可視化</span>
+                        <span class="nav-desc">未認可生成 AI の利用状況可視化</span>
+                    </a>
+                </div>
+            </div>
+            <div class="card highlight-strategy">
+                <div class="card-header"><h3>従業員体験向上とサステイナブルIT</h3></div>
+                <div class="card-content">
+                    <a href="https://kanopy-full.us.nexthink.cloud/digital-experience/overview" class="nav-item" target="_blank" >
+                        <span class="nav-title">🎯 DEX スコア管理 (XLA) </span>
+                        <span class="nav-desc">デジタル体験を数値化し中長期での改善を検討</span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/7a4d7a61-f058-4812-b48e-e69189c13d26" class="nav-item" target="_blank">
+                        <span class="nav-title">📊 従業員アプリ利用分析</span>
+                        <span class="nav-desc">Web/SaaS, ローカルアプリの利用状況分析</span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/ce486244-2bc0-4bbf-8ef2-9c2c66fb682d" class="nav-item" target="_blank">
+                        <span class="nav-title">🍃 サステイナブル IT ダッシュボード</span>
+                        <span class="nav-desc">デバイスの電力効率とCO2排出削減</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sec5" class="tab-panel">
+        <div class="column-header"><h2>5. セキュリティ & コンプライアンス</h2></div>
+        <div class="card-row-inner">
+            <div class="card highlight-security">
+                <div class="card-header"><h3>セキュリティとコンプライアンス</h3></div>
+                <div class="card-content">
+                    <a href="https://kanopy-full.us.nexthink.cloud/bus/2fd1c862-2622-4c9d-bdf9-138f82b10bf2/desktop/overview" class="nav-item" target="_blank">
+                        <span class="nav-title">🔒 セキュリティエージェントの健全性</span>
+                        <span class="nav-desc"> クラッシュやフリーズの状態を可視化 </span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/d5974da5-9467-4562-a084-494e925d0c1b" class="nav-item" target="_blank">
+                        <span class="nav-title">🔍 怪しいバイナリ検出</span>
+                        <span class="nav-desc">製品名が不明、利用率が低いバイナリの検出</span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/d35ce4c3-733d-47ab-85e3-6c4e7cc18313" class="nav-item" target="_blank">
+                        <span class="nav-title">🕵️ Shadow IT 可視化</span>
+                        <span class="nav-desc">Shadow IT の利用状況可視化</span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/fa13ef0b-e1c8-41ef-9b95-4e793749099d" class="nav-item" target="_blank">
+                        <span class="nav-title">✅ Windows OS コンプライアンス</span>
+                        <span class="nav-desc">パッチ適用状況等のガバナンス状況を包括的に確認</span>
+                    </a>
+                </div>
+            </div>
+            <div class="card highlight-security">
+                <div class="card-header"><h3>配信ツールの健全化</h3></div>
+                <div class="card-content">
+                    <a href="https://kanopy-full.us.nexthink.cloud/workflows/5861e4c1-fea1-4846-83f8-6383e54a4a5e" class="nav-item" target="_blank">
+                        <span class="nav-title">⚙️ Intune 自動修復 (ワークフロー) </span>
+                        <span class="nav-desc">Intune が本来動作する状況にするための自動ワークフロー</span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/b006e467-8bb4-4b0d-9955-a6cba77fbf13?context=time.from=7d,time.resolution=1d,v=1&tabId=X670CkQk" class="nav-item" target="_blank">
+                        <span class="nav-title">📊 MECM (SCCM) 健全性 (ダッシュボード) </span>
+                        <span class="nav-desc">MECM(SCCM)の健全性確認</span>
+                    </a>
+                    <a href="https://kanopy-full.us.nexthink.cloud/workflows/5659f93c-f6ae-4683-8631-2476974363a0" class="nav-item" target="_blank">
+                        <span class="nav-title">🛠️ MECM (SCCM) 自動修復 (ワークフロー)</span>
+                        <span class="nav-desc">MECM(SCCM)が本来動作する状況にするための自動ワークフロー</span>
+                    </a>
+                    <img src="image_925e00.jpg" alt="MECM Workflow Logic" class="workflow-image">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sec6" class="tab-panel">
+        <div class="column-header"><h2>6. その他ユースケース</h2></div>
+        <div class="card-row-inner">
+            <div class="card highlight-security">
+                <div class="card-header"><h3>カスタムコンテンツ</h3></div>
+                <div class="card-content">
+                    <a href="https://yk141574-creator.github.io/print/print.html" class="nav-item" target="_blank">
+                        <span class="nav-title">📄 印刷枚数の集計 (画面キャプチャ)</span>
+                        <span class="nav-desc">端末ごとの印刷状況の可視化</span>
+                    </a>
+                </div>
+            </div>
+         </div>
+    </div>
+</main>
+
+<footer>ネクストシンク合同会社</footer>
+
+<script>
+function openTab(evt, tabId) {
+    var i, tabpanel, tablinks;
+    tabpanel = document.getElementsByClassName("tab-panel");
+    for (i = 0; i < tabpanel.length; i++) {
+        tabpanel[i].style.display = "none";
+        tabpanel[i].classList.remove("active");
+    }
+    tablinks = document.getElementsByClassName("tab-button");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].classList.remove("active");
+    }
+    document.getElementById(tabId).style.display = "block";
+    setTimeout(function(){
+        document.getElementById(tabId).classList.add("active");
+    }, 10);
+    evt.currentTarget.classList.add("active");
+}
+</script>
+
+</body>
+</html>
