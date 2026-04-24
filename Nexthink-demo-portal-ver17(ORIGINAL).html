@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexthink DEMO Portal (Ver.29 - Themed Tabs)</title>
+    <title>Nexthink DEMO Portal (Ver.29 - Refined 3D)</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -15,20 +15,21 @@
             --text-main: #1e293b;
             --text-sub: #64748b;
             --border-color: #eef2f6;
-            /* Default Theme Variables (will be overridden) */
+            /* Modest 3D Variables */
             --theme-color: var(--nx-dark-blue);
             --theme-light: #f0f7ff;
-            --shadow-3d: 0 5px 0 #e2e8f0, 0 12px 20px rgba(0,0,0,0.04);
+            --shadow-depth: 4px; /* 控えめな立体感 */
+            --shadow-color: rgba(0, 30, 60, 0.1);
         }
 
         /* --- Theme Definitions --- */
-        .tab-content-blue { --theme-color: #001e3c; --theme-light: #f0f7ff; }
-        .tab-content-purple { --theme-color: #6366f1; --theme-light: #f5f3ff; }
-        .tab-content-orange { --theme-color: #f39c12; --theme-light: #fffaf0; }
-        .tab-content-green { --theme-color: #96c93d; --theme-light: #f0fdf4; }
-        .tab-content-slate { --theme-color: #475569; --theme-light: #f8fafc; }
-        .tab-content-teal { --theme-color: #14b8a6; --theme-light: #f0fdfa; }
-        .tab-content-info { --theme-color: #64748b; --theme-light: #f1f5f9; }
+        .tab-content-blue { --theme-color: #001e3c; --theme-light: #f0f7ff; --shadow-color: rgba(0, 30, 60, 0.12); }
+        .tab-content-purple { --theme-color: #6366f1; --theme-light: #f5f3ff; --shadow-color: rgba(99, 102, 241, 0.15); }
+        .tab-content-orange { --theme-color: #f39c12; --theme-light: #fffaf0; --shadow-color: rgba(243, 156, 18, 0.15); }
+        .tab-content-green { --theme-color: #96c93d; --theme-light: #f0fdf4; --shadow-color: rgba(150, 201, 61, 0.15); }
+        .tab-content-slate { --theme-color: #475569; --theme-light: #f8fafc; --shadow-color: rgba(71, 85, 105, 0.12); }
+        .tab-content-teal { --theme-color: #14b8a6; --theme-light: #f0fdfa; --shadow-color: rgba(20, 184, 166, 0.15); }
+        .tab-content-info { --theme-color: #64748b; --theme-light: #f1f5f9; --shadow-color: rgba(100, 116, 139, 0.12); }
 
         body {
             font-family: 'Quicksand', 'Zen Maru Gothic', sans-serif;
@@ -90,13 +91,12 @@
             font-weight: 700;
             color: var(--text-sub);
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
             border-radius: 50px;
         }
 
         .tab-button:hover { color: var(--nx-dark-blue); background: #f1f5f9; }
         
-        /* Active Tab State (Dynamic Color via JS Classes) */
         .active-blue .tab-button.active { background: #001e3c; color: white; }
         .active-purple .tab-button.active { background: #6366f1; color: white; }
         .active-orange .tab-button.active { background: #f39c12; color: white; }
@@ -113,11 +113,11 @@
         }
 
         .tab-panel { display: none; }
-        .tab-panel.active { display: block; animation: softIn 0.5s ease; }
+        .tab-panel.active { display: block; animation: softIn 0.4s ease-out; }
 
         @keyframes softIn {
-            from { opacity: 0; transform: scale(0.98) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .card-row-inner, .card-row-three {
@@ -131,98 +131,90 @@
         /* --- Card Styles --- */
         .card {
             background: var(--card-bg);
-            border-radius: 24px;
+            border-radius: 20px;
             border: 1px solid var(--border-color);
-            border-top: 8px solid var(--theme-color); /* Unified border top */
+            border-top: 6px solid var(--theme-color);
             margin-bottom: 2rem;
             overflow: hidden;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
         }
 
-        .card-header { padding: 1.3rem 1.6rem; background-color: #fafbfc; border-bottom: 1px solid var(--border-color); }
-        .card-header h3 { margin: 0; font-size: 1.05rem; font-weight: 700; color: var(--theme-color); }
-        .card-content { padding: 1.6rem; }
+        .card-header { padding: 1.2rem 1.5rem; background-color: #fafbfc; border-bottom: 1px solid var(--border-color); }
+        .card-header h3 { margin: 0; font-size: 1rem; font-weight: 700; color: var(--theme-color); }
+        .card-content { padding: 1.5rem; }
 
-        /* --- Unified 3D Buttons --- */
+        /* --- Refined 3D Buttons (.nav-item) --- */
         .nav-item {
             display: block;
             text-decoration: none;
-            padding: 1.2rem 1.5rem;
-            margin-bottom: 1.4rem;
-            border-radius: 20px;
+            padding: 1.1rem 1.4rem;
+            margin-bottom: 1.3rem;
+            border-radius: 16px;
             background: #ffffff;
             border: 1px solid #eef2f6;
-            box-shadow: var(--shadow-3d);
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            
+            /* 控えめな立体影 */
+            box-shadow: 0 var(--shadow-depth) 0 var(--shadow-color), 0 8px 15px rgba(0,0,0,0.04);
+            
+            transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
+            top: 0;
         }
 
         .nav-item:hover {
-            transform: translateY(2px);
-            box-shadow: 0 3px 0 #e2e8f0, 0 8px 12px rgba(0,0,0,0.05);
-            background-color: var(--theme-light); /* Unified hover color */
+            transform: translateY(-2px); /* わずかに浮上 */
+            background-color: var(--theme-light);
             border-color: var(--theme-color);
+            box-shadow: 0 calc(var(--shadow-depth) + 1px) 0 var(--shadow-color), 0 10px 18px rgba(0,0,0,0.07);
         }
 
         .nav-item:active {
-            transform: translateY(5px);
-            box-shadow: 0 0 0 #e2e8f0;
+            transform: translateY(3px); /* 影の分だけ押し込む */
+            box-shadow: 0 1px 0 var(--shadow-color), inset 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.08s;
         }
 
         .nav-title { 
             display: block; 
             font-weight: 700; 
-            font-size: 1.05rem; 
+            font-size: 1.02rem; 
             color: var(--nx-dark-blue); 
-            margin-bottom: 0.3rem;
-            transition: color 0.2s;
+            margin-bottom: 0.2rem;
         }
         .nav-item:hover .nav-title { color: var(--theme-color); }
 
         .nav-desc { 
             display: block; 
-            font-size: 0.88rem; 
+            font-size: 0.85rem; 
             color: var(--text-sub); 
-            line-height: 1.6; 
+            line-height: 1.5; 
             font-weight: 500;
-        }
-
-        .footnote-link {
-            display: block;
-            text-align: right;
-            margin-top: -5px;
-            margin-bottom: 10px;
-            font-size: 0.85rem;
-            color: var(--nx-purple);
-            font-weight: 700;
-            text-decoration: underline;
         }
 
         .ai-badge {
             display: inline-block;
             background: linear-gradient(135deg, #6366f1, #a855f7);
             color: white;
-            font-size: 0.7rem;
-            padding: 3px 10px;
+            font-size: 0.65rem;
+            padding: 2px 8px;
             border-radius: 50px;
-            font-weight: 900;
-            margin-left: 8px;
+            font-weight: 800;
+            margin-left: 6px;
             vertical-align: middle;
-            box-shadow: 0 4px 8px rgba(99, 102, 241, 0.2);
         }
 
         .instruction-box {
             background: #f8fafc;
-            border-radius: 20px;
-            padding: 1.5rem;
+            border-radius: 16px;
+            padding: 1.4rem;
             margin-bottom: 1rem;
             border: 1px solid var(--border-color);
-            border-left: 6px solid var(--theme-color);
+            border-left: 5px solid var(--theme-color);
         }
         .step-text {
             display: block;
-            margin-bottom: 0.8rem;
-            font-size: 0.95rem;
+            margin-bottom: 0.7rem;
+            font-size: 0.92rem;
             color: var(--text-main);
             font-weight: 500;
         }
@@ -230,18 +222,19 @@
         .workflow-image {
             width: 100%;
             height: auto;
-            border-radius: 20px;
-            margin-top: 15px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            border-radius: 16px;
+            margin-top: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
         }
 
         footer {
             margin-top: 5rem;
-            padding: 4rem;
+            padding: 3rem;
             text-align: center;
             border-top: 1px solid var(--border-color);
             color: var(--text-sub);
-            font-weight: 700;
+            font-size: 0.9rem;
+            font-weight: 600;
             background: white;
         }
     </style>
@@ -405,7 +398,6 @@
                         <span class="nav-title">🤖 従業員向け AI ヘルプデスク (SPARK) <span class="ai-badge">AI Agent</span></span>
                         <span class="nav-desc">従業員がチャットで問題を自己解決 (※要デモスクリプト /startdemojp)</span>
                     </a>
-                    <a href="https://www.microsoft.com/ja-jp/power-platform/products/power-bi" class="footnote-link" target="_blank">※ Microsoft PowerBI</a>
                 </div>
             </div>
         </div>
@@ -544,30 +536,21 @@
 <script>
 function openTab(evt, tabId, theme) {
     var i, tabpanel, tablinks;
-    
-    // Hide all panels
     tabpanel = document.getElementsByClassName("tab-panel");
     for (i = 0; i < tabpanel.length; i++) {
         tabpanel[i].style.display = "none";
         tabpanel[i].classList.remove("active");
     }
-    
-    // Remove active state from all buttons
     tablinks = document.getElementsByClassName("tab-button");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].classList.remove("active");
     }
-    
-    // Update body class for active tab color
     document.body.className = "active-" + theme;
-    
-    // Show current panel
     var currentPanel = document.getElementById(tabId);
     currentPanel.style.display = "block";
     setTimeout(function(){
         currentPanel.classList.add("active");
     }, 10);
-    
     evt.currentTarget.classList.add("active");
 }
 </script>
