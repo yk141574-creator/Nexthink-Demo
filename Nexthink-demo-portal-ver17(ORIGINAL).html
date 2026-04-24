@@ -3,189 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexthink DEMO Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Nexthink DEMO Portal (Ver.29 - Themed Tabs)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --nx-dark-blue: #001e3c;
-            --nx-blue-light: #0a325a;
-            --nx-green: #96c93d;
-            --nx-accent-orange: #f39c12;
-            --nx-purple: #6366f1;
-            --nx-slate: #475569;
-            --nx-bg: #f8fafc;
+            --nx-blue-light: #0d3b66;
+            --nx-green: #96c93d; 
+            --nx-bg: #f9fbff;
             --card-bg: #ffffff;
-            --text-main: #0f172a;
-            --text-sub: #475569;
-            --border-color: #e2e8f0;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
-            --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.1);
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --border-color: #eef2f6;
+            /* Default Theme Variables (will be overridden) */
+            --theme-color: var(--nx-dark-blue);
+            --theme-light: #f0f7ff;
+            --shadow-3d: 0 5px 0 #e2e8f0, 0 12px 20px rgba(0,0,0,0.04);
         }
 
+        /* --- Theme Definitions --- */
+        .tab-content-blue { --theme-color: #001e3c; --theme-light: #f0f7ff; }
+        .tab-content-purple { --theme-color: #6366f1; --theme-light: #f5f3ff; }
+        .tab-content-orange { --theme-color: #f39c12; --theme-light: #fffaf0; }
+        .tab-content-green { --theme-color: #96c93d; --theme-light: #f0fdf4; }
+        .tab-content-slate { --theme-color: #475569; --theme-light: #f8fafc; }
+        .tab-content-teal { --theme-color: #14b8a6; --theme-light: #f0fdfa; }
+        .tab-content-info { --theme-color: #64748b; --theme-light: #f1f5f9; }
+
         body {
-            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            font-family: 'Quicksand', 'Zen Maru Gothic', sans-serif;
             background-color: var(--nx-bg);
             margin: 0;
             color: var(--text-main);
-            line-height: 1.6;
+            line-height: 1.7;
             font-size: 16px;
         }
 
         /* --- Header --- */
         header {
-            background-color: var(--nx-dark-blue);
+            background: radial-gradient(circle at top left, var(--nx-dark-blue), var(--nx-blue-light));
             color: white;
-            padding: 1.2rem 2.5rem;
+            padding: 1.3rem 2.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
-        .logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 900; display: flex; align-items: center; }
         .logo span { color: var(--nx-green); margin-right: 8px; }
-        .logo-sub { font-size: 0.95rem; opacity: 0.8; margin-left: 15px; padding-left: 15px; border-left: 1px solid rgba(255,255,255,0.3); font-weight: 400; }
+        .logo-sub { font-size: 0.9rem; opacity: 0.8; margin-left: 15px; padding-left: 15px; border-left: 1px solid rgba(255,255,255,0.2); font-weight: 500; }
 
         /* --- Hero --- */
         .hero-section {
-            background: linear-gradient(135deg, var(--nx-dark-blue) 0%, var(--nx-blue-light) 100%);
+            background: linear-gradient(135deg, var(--nx-dark-blue) 0%, #164e85 100%);
             color: white;
-            padding: 2.5rem 2rem;
+            padding: 3rem 2rem;
             text-align: center;
         }
-        .page-title { font-size: 2.5rem; font-weight: 800; margin: 0 0 0.5rem 0; }
-        .hero-desc { font-size: 1.15rem; color: #cbd5e1; max-width: 1000px; margin: 0 auto; opacity: 0.9; }
+        .page-title { font-size: 2.6rem; font-weight: 900; margin: 0 0 0.8rem 0; letter-spacing: -0.02em; }
+        .hero-desc { font-size: 1.15rem; color: #e2e8f0; max-width: 900px; margin: 0 auto; opacity: 0.95; }
 
-        /* --- Tab Navigation --- */
+        /* --- Navigation Tabs --- */
         .tabs-nav {
-            background: white;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            padding: 0 2rem;
+            padding: 0.5rem 2rem;
             position: sticky;
-            top: 74px; 
+            top: 76px; 
             z-index: 999;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .tab-button {
-            padding: 1rem 1.5rem;
+            padding: 0.8rem 1.4rem;
+            margin: 0.2rem;
             border: none;
             background: none;
-            font-size: 1rem;
+            font-size: 0.92rem;
             font-weight: 700;
             color: var(--text-sub);
             cursor: pointer;
-            transition: all 0.2s ease;
-            border-bottom: 4px solid transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 50px;
         }
 
-        .tab-button:hover { color: var(--nx-dark-blue); background: rgba(0,0,0,0.02); }
-        .tab-button.active {
-            color: var(--nx-dark-blue);
-            border-bottom-color: var(--nx-green);
-        }
+        .tab-button:hover { color: var(--nx-dark-blue); background: #f1f5f9; }
+        
+        /* Active Tab State (Dynamic Color via JS Classes) */
+        .active-blue .tab-button.active { background: #001e3c; color: white; }
+        .active-purple .tab-button.active { background: #6366f1; color: white; }
+        .active-orange .tab-button.active { background: #f39c12; color: white; }
+        .active-green .tab-button.active { background: #96c93d; color: white; }
+        .active-slate .tab-button.active { background: #475569; color: white; }
+        .active-teal .tab-button.active { background: #14b8a6; color: white; }
+        .active-info .tab-button.active { background: #64748b; color: white; }
 
-        /* --- Layout Grid --- */
+        /* --- Main Layout --- */
         main {
-            padding: 2.5rem;
-            max-width: 1400px;
+            padding: 3rem 2rem;
+            max-width: 1300px;
             margin: 0 auto;
         }
 
         .tab-panel { display: none; }
-        .tab-panel.active { display: block; animation: fadeIn 0.3s ease; }
+        .tab-panel.active { display: block; animation: softIn 0.5s ease; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes softIn {
+            from { opacity: 0; transform: scale(0.98) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        .card-row-inner {
+        .card-row-inner, .card-row-three {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
+            gap: 2rem;
             align-items: start;
         }
+        .card-row-inner { grid-template-columns: 1fr 1fr; }
+        .card-row-three { grid-template-columns: 1fr 1fr 1fr; }
 
-        .card-row-three {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 1.5rem;
-            align-items: start;
-        }
-
-        .column-header {
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 0.6rem;
-        }
-
-        .column-header h2 {
-            font-size: 1.1rem;
-            font-weight: 800;
-            margin: 0;
-            color: var(--nx-dark-blue);
-            text-transform: uppercase;
-        }
-
+        /* --- Card Styles --- */
         .card {
             background: var(--card-bg);
-            border-radius: 14px;
+            border-radius: 24px;
             border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
+            border-top: 8px solid var(--theme-color); /* Unified border top */
+            margin-bottom: 2rem;
             overflow: hidden;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.03);
         }
-        .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
 
-        .card-header { padding: 1.1rem 1.4rem; background-color: #fafbfc; border-bottom: 1px solid var(--border-color); }
-        .card-header h3 { margin: 0; font-size: 1rem; font-weight: 700; color: var(--nx-dark-blue); }
-        .card-content { padding: 1.25rem; }
+        .card-header { padding: 1.3rem 1.6rem; background-color: #fafbfc; border-bottom: 1px solid var(--border-color); }
+        .card-header h3 { margin: 0; font-size: 1.05rem; font-weight: 700; color: var(--theme-color); }
+        .card-content { padding: 1.6rem; }
 
-        .highlight-roi { border-top: 7px solid var(--nx-dark-blue); }
-        .highlight-trouble { border-top: 7px solid var(--nx-purple); }
-        .highlight-ops { border-top: 7px solid var(--nx-accent-orange); }
-        .highlight-strategy { border-top: 7px solid var(--nx-green); }
-        .highlight-security { border-top: 7px solid var(--nx-slate); }
-
-        /* --- Link Items --- */
+        /* --- Unified 3D Buttons --- */
         .nav-item {
             display: block;
             text-decoration: none;
-            padding: 1.1rem 1.3rem;
-            margin-bottom: 0.75rem;
-            border-radius: 10px;
-            background: #fff;
-            border: 1px solid var(--border-color);
-            transition: all 0.2s ease;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1.4rem;
+            border-radius: 20px;
+            background: #ffffff;
+            border: 1px solid #eef2f6;
+            box-shadow: var(--shadow-3d);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
         }
-        .nav-item:hover { background: #f0fdf4; border-color: var(--nx-green); }
+
+        .nav-item:hover {
+            transform: translateY(2px);
+            box-shadow: 0 3px 0 #e2e8f0, 0 8px 12px rgba(0,0,0,0.05);
+            background-color: var(--theme-light); /* Unified hover color */
+            border-color: var(--theme-color);
+        }
+
+        .nav-item:active {
+            transform: translateY(5px);
+            box-shadow: 0 0 0 #e2e8f0;
+        }
 
         .nav-title { 
             display: block; 
             font-weight: 700; 
-            font-size: 1.1rem; 
+            font-size: 1.05rem; 
             color: var(--nx-dark-blue); 
-            margin-bottom: 0.4rem;
-            white-space: normal; 
-            word-break: break-word;
+            margin-bottom: 0.3rem;
+            transition: color 0.2s;
         }
-        .nav-desc { display: block; font-size: 0.95rem; color: var(--text-sub); line-height: 1.5; }
+        .nav-item:hover .nav-title { color: var(--theme-color); }
+
+        .nav-desc { 
+            display: block; 
+            font-size: 0.88rem; 
+            color: var(--text-sub); 
+            line-height: 1.6; 
+            font-weight: 500;
+        }
 
         .footnote-link {
             display: block;
             text-align: right;
-            margin-top: 4px;
+            margin-top: -5px;
+            margin-bottom: 10px;
             font-size: 0.85rem;
             color: var(--nx-purple);
-            font-weight: 600;
+            font-weight: 700;
             text-decoration: underline;
         }
 
@@ -193,38 +202,51 @@
             display: inline-block;
             background: linear-gradient(135deg, #6366f1, #a855f7);
             color: white;
-            font-size: 0.75rem;
-            padding: 3px 8px;
-            border-radius: 5px;
-            font-weight: 800;
-            margin-left: 6px;
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-weight: 900;
+            margin-left: 8px;
             vertical-align: middle;
+            box-shadow: 0 4px 8px rgba(99, 102, 241, 0.2);
         }
 
-        footer {
-            margin-top: 4rem;
-            padding: 3rem;
-            text-align: center;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-sub);
+        .instruction-box {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+            border-left: 6px solid var(--theme-color);
+        }
+        .step-text {
+            display: block;
+            margin-bottom: 0.8rem;
             font-size: 0.95rem;
+            color: var(--text-main);
+            font-weight: 500;
         }
-
-        .admin-link-box { border-top: 7px solid var(--nx-green) !important; }
-        .admin-link-box .nav-title { color: var(--nx-dark-blue) !important; }
 
         .workflow-image {
             width: 100%;
             height: auto;
-            border-radius: 8px;
+            border-radius: 20px;
             margin-top: 15px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
         }
 
+        footer {
+            margin-top: 5rem;
+            padding: 4rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-sub);
+            font-weight: 700;
+            background: white;
+        }
     </style>
 </head>
-<body>
+<body class="active-blue">
 
 <header>
     <div class="logo"><span>Nexthink</span> DEMO Portal <span class="logo-sub">DEX デモ用カスタムポータル (注) 製品のコンソールではありません。</span></div>
@@ -232,24 +254,23 @@
 
 <div class="hero-section">
     <h1 class="page-title">Digital Employee Experience</h1>
-    <p class="hero-desc">ITコストの最適化、プロアクティブ・サポート、運用自動化、そして戦略的なデジタルガバナンスの実現。Nexthinkが提供する次世代のIT運用管理を体感してください。</p>
+    <p class="hero-desc">ITコストの最適化、プロアクティブ・サポート、運用自動化、そして戦略的なデジタルガバナンスの実現。</p>
 </div>
 
-<nav class="tabs-nav">
-    <button class="tab-button active" onclick="openTab(event, 'sec1')">1. コスト削減/資産管理</button>
-    <button class="tab-button" onclick="openTab(event, 'sec2')">2. 障害対応/分析</button>
-    <button class="tab-button" onclick="openTab(event, 'sec3')">3. ヘルプデスク</button>
-    <button class="tab-button" onclick="openTab(event, 'sec4')">4. 戦略/ガバナンス</button>
-    <button class="tab-button" onclick="openTab(event, 'sec5')">5. セキュリティ</button>
-    <button class="tab-button" onclick="openTab(event, 'sec6')">6. その他ユースケース</button>
-    <button class="tab-button" onclick="openTab(event, 'sec0')">0. 社内向け情報</button>
+<nav class="tabs-nav" id="mainNav">
+    <button class="tab-button active" onclick="openTab(event, 'sec1', 'blue')">コスト削減/資産管理</button>
+    <button class="tab-button" onclick="openTab(event, 'sec2', 'purple')">障害対応/分析</button>
+    <button class="tab-button" onclick="openTab(event, 'sec3', 'orange')">ヘルプデスク</button>
+    <button class="tab-button" onclick="openTab(event, 'sec4', 'green')">戦略/ガバナンス</button>
+    <button class="tab-button" onclick="openTab(event, 'sec5', 'slate')">セキュリティ</button>
+    <button class="tab-button" onclick="openTab(event, 'sec6', 'teal')">その他ユースケース</button>
+    <button class="tab-button" onclick="openTab(event, 'sec0', 'info')">社内向け情報</button>
 </nav>
 
-<main>
-    <div id="sec1" class="tab-panel active">
-        <div class="column-header"><h2>1. コスト削減と資産管理</h2></div>
+<main id="tabWrapper">
+    <div id="sec1" class="tab-panel active tab-content-blue">
         <div class="card-row-inner">
-            <div class="card highlight-roi">
+            <div class="card">
                 <div class="card-header"><h3>コスト最適化 (CAPEX削減)</h3></div>
                 <div class="card-content">
                     <a href="https://kanopy-full.us.nexthink.cloud/dashboards/17d070fb-deb4-4573-b33d-ba6ae2c3cd41" class="nav-item" target="_blank">
@@ -270,16 +291,16 @@
                     </a>
                 </div>
             </div>
-            <div class="card highlight-roi">
+            <div class="card">
                 <div class="card-header"><h3>特定資産詳細と従業員アンケート</h3></div>
                 <div class="card-content">
                     <a href="https://kanopy-full.us.nexthink.cloud/software-metering/details/474445ec-7273-4fdc-b413-e8b02e169aa0" class="nav-item" target="_blank">
                         <span class="nav-title">📄 Adobe Acrobat 利用状況 </span>
-                        <span class="nav-desc">有償ライセンスの実際の利用状況精査(低利用時間のユーザも特定)</span>
+                        <span class="nav-desc">有償ライセンスの実際の利用状況精査(低利用ユーザ特定)</span>
                     </a>
                     <a href="https://kanopy-full.us.nexthink.cloud/software-metering/details/fe0e95e6-c4b9-46bf-83fc-8b3640de5967" class="nav-item" target="_blank">
                         <span class="nav-title">☁️ Microsoft 365 利用状況 </span>
-                        <span class="nav-desc">M365各サービスの実際の利用状況精査(低利用時間のユーザも特定)</span>
+                        <span class="nav-desc">M365各サービスの利用状況精査(低利用ユーザ特定)</span>
                     </a>
                     <a href="https://yk141574-creator.github.io/Java/%E3%82%AA%E3%83%A9%E3%82%AF%E3%83%ABJava%E3%83%A9%E3%82%A4%E3%82%BB%E3%83%B3%E3%82%B9%E7%AE%A1%E7%90%86.png" class="nav-item" target="_blank">
                         <span class="nav-title">🖼️ オラクル Java ライセンス管理 (画面キャプチャ)</span>
@@ -294,14 +315,13 @@
         </div>
     </div>
 
-    <div id="sec2" class="tab-panel">
-        <div class="column-header"><h2>2. 障害対応と分析</h2></div>
+    <div id="sec2" class="tab-panel tab-content-purple">
         <div class="card-row-three">
             <div>
-                <div class="card highlight-trouble">
+                <div class="card">
                     <div class="card-header"><h3>アラートと AI 分析機能</h3></div>
                     <div class="card-content">
-                        <a href="https://kanopy-full.us.nexthink.cloud/alerts/alerts/alert-hub" class="nav-item" target="_blank" >
+                        <a href="https://kanopy-full.us.nexthink.cloud/alerts/alerts/alert-hub" class="nav-item" target="_blank">
                             <span class="nav-title">🔔 アラート・ハブ</span>
                             <span class="nav-desc">全社規模の障害や体験低下をリアルタイム検知</span>
                         </a>
@@ -311,25 +331,25 @@
                         </a>
                     </div>
                 </div>
-                <div class="card highlight-trouble">
+                <div class="card">
                     <div class="card-header"><h3>ワークフロー (ServiceNow 連携)</h3></div>
                     <div class="card-content">
-                        <a href="https://yk141574-creator.github.io/DiskCleanup/ServiceNow%E3%83%81%E3%82%B1%E3%83%83%E3%83%88%E8%B5%B7%E7%A5%A8%E3%83%87%E3%83%A2.html" class="nav-item" target="_blank" >
+                        <a href="https://yk141574-creator.github.io/DiskCleanup/ServiceNow%E3%83%81%E3%82%B1%E3%83%83%E3%83%88%E8%B5%B7%E7%A5%A8%E3%83%87%E3%83%A2.html" class="nav-item" target="_blank">
                             <span class="nav-title">⚙️ ディスククリーンアップ (画面キャプチャ)</span>
-                            <span class="nav-desc">ワークフローでディスククリーンアップとサービスチケット起票まで自動化</span>
+                            <span class="nav-desc">ディスククリーンアップとサービスチケット起票を自動化</span>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="card highlight-trouble">
+            <div class="card">
                 <div class="card-header"><h3>デバイス・ネットワーク診断</h3></div>
                 <div class="card-content">
-                    <a href="https://kanopy-full.us.nexthink.cloud/sup/device/search/KAN-MIAMI-76FL61" class="nav-item" target="_blank" >
+                    <a href="https://kanopy-full.us.nexthink.cloud/sup/device/search/KAN-MIAMI-76FL61" class="nav-item" target="_blank">
                         <span class="nav-title">📍 デバイス診断(個別) </span>
-                        <span class="nav-desc">特定のデバイスにフォーカスした詳細調査(Device 360°)</span>
+                        <span class="nav-desc">特定デバイスにフォーカスした詳細調査(Device 360°)</span>
                     </a>
-                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/a77e5b68-fba3-478c-b1ae-b201867fc71c" class="nav-item" target="_blank" >
+                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/a77e5b68-fba3-478c-b1ae-b201867fc71c" class="nav-item" target="_blank">
                         <span class="nav-title">📊 デバイス診断(全社)</span>
                         <span class="nav-desc">デバイスに関連する健全性を包括的に分析</span>
                     </a>
@@ -348,12 +368,12 @@
                 </div>
             </div>
 
-            <div class="card highlight-trouble">
+            <div class="card">
                 <div class="card-header"><h3>アプリケーション / SaaS 診断</h3></div>
                 <div class="card-content">
                     <a href="https://kanopy-full.us.nexthink.cloud/dashboards/collaboration-tools/f248ccd8-2073-4f80-93a1-ebf555667a07" class="nav-item" target="_blank">
                         <span class="nav-title">📞 通話品質診断(Teams/Zoom)</span>
-                        <span class="nav-desc">音声途切れや切断の原因の絞り込み</span>
+                        <span class="nav-desc">音声途切れや切断の原因絞り込み</span>
                     </a>
                     <a href="https://kanopy-full.us.nexthink.cloud/bus/ef3f0d8d-5fa1-4357-843c-19d96b7c7bf0/web/overview" class="nav-item" target="_blank">
                         <span class="nav-title">🏢 SAP S/4 HANA 診断</span>
@@ -372,22 +392,18 @@
         </div>
     </div>
 
-    <div id="sec3" class="tab-panel">
-        <div class="column-header"><h2>3. ヘルプデスクの効率化</h2></div>
-        <div class="card highlight-ops">
+    <div id="sec3" class="tab-panel tab-content-orange">
+        <div class="card">
             <div class="card-header"><h3>チケット対応の効率化と自動化</h3></div>
             <div class="card-content">
                 <a href="https://yk141574-creator.github.io/ITSM/ITSM.html" class="nav-item" target="_blank">
                     <span class="nav-title">🛠️ チケット対応効率化(MTTR 短縮) </span>
-                    <span class="nav-desc">ITSM から数クリックで診断・修復</span>
-                        <span class="nav-desc">※ 事前に Amplify プラグインの設定と認証が必要 </span>
-
+                    <span class="nav-desc">ITSM から数クリックで診断・修復 (※Amplify 事前設定が必要)</span>
                 </a>
-                <div style="background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:1.1rem; margin-bottom:0.75rem;">
-                    <a href="https://teams.cloud.microsoft/" style="text-decoration:none;" target="_blank">
+                <div style="background:#fff; border-radius:24px; margin-bottom:1.4rem;">
+                    <a href="https://teams.cloud.microsoft/" class="nav-item" target="_blank">
                         <span class="nav-title">🤖 従業員向け AI ヘルプデスク (SPARK) <span class="ai-badge">AI Agent</span></span>
-                        <span class="nav-desc">従業員がチャットで問題を自己解決</span>
-                        <span class="nav-desc">※ 事前にデモスクリプト(/startdemojp)の実行が必要</span>
+                        <span class="nav-desc">従業員がチャットで問題を自己解決 (※要デモスクリプト /startdemojp)</span>
                     </a>
                     <a href="https://www.microsoft.com/ja-jp/power-platform/products/power-bi" class="footnote-link" target="_blank">※ Microsoft PowerBI</a>
                 </div>
@@ -395,10 +411,9 @@
         </div>
     </div>
 
-    <div id="sec4" class="tab-panel">
-        <div class="column-header"><h2>4. 戦略とガバナンス</h2></div>
+    <div id="sec4" class="tab-panel tab-content-green">
         <div class="card-row-inner">
-            <div class="card highlight-strategy">
+            <div class="card">
                 <div class="card-header"><h3>生成AIの可視化と促進</h3></div>
                 <div class="card-content">
                     <a href="https://kanopy-full.us.nexthink.cloud/ai-tools/overview" class="nav-item" target="_blank">
@@ -410,21 +425,19 @@
                         <span class="nav-desc">MS Copilotの普及度と活用傾向を可視化</span>
                     </a>
                     <a href="https://kanopy-corp.com/ai/mspilot" class="nav-item" target="_blank">
-                        <span class="nav-title">🔀 認可 AI へのリダイレクトとユーザガイド</span>
-                        <span class="nav-desc">「未認可AI」から「認可AI」へのリダイレクトと使い方ガイド</span>
-                        <span class="nav-desc">※ 事前に Nexthink または Nexthink(Beta) プラグインの設定と認証が必要 </span>
-
+                        <span class="nav-title">🔀 認可 AI 誘導とユーザガイド</span>
+                        <span class="nav-desc">「未認可AI」から「認可AI」への誘導 (※Adopt 設定必要)</span>
                     </a>
-                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/d35ce4c3-733d-47ab-85e3-6c4e7cc18313?context=time.from=7d,time.resolution=1d,v=1&tabId=edSr3nGB" class="nav-item" target="_blank">
+                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/d35ce4c3-733d-47ab-85e3-6c4e7cc18313" class="nav-item" target="_blank">
                         <span class="nav-title">🔍 Shadow AI 可視化</span>
                         <span class="nav-desc">未認可生成 AI の利用状況可視化</span>
                     </a>
                 </div>
             </div>
-            <div class="card highlight-strategy">
+            <div class="card">
                 <div class="card-header"><h3>従業員体験向上とサステイナブルIT</h3></div>
                 <div class="card-content">
-                    <a href="https://kanopy-full.us.nexthink.cloud/digital-experience/overview" class="nav-item" target="_blank" >
+                    <a href="https://kanopy-full.us.nexthink.cloud/digital-experience/overview" class="nav-item" target="_blank">
                         <span class="nav-title">🎯 DEX スコア管理 (XLA) </span>
                         <span class="nav-desc">デジタル体験を数値化し中長期での改善を検討</span>
                     </a>
@@ -434,17 +447,16 @@
                     </a>
                     <a href="https://kanopy-full.us.nexthink.cloud/dashboards/ce486244-2bc0-4bbf-8ef2-9c2c66fb682d" class="nav-item" target="_blank">
                         <span class="nav-title">🍃 サステイナブル IT ダッシュボード</span>
-                        <span class="nav-desc">デバイスの電力効率とCO2排出削減</span>
+                        <span class="nav-desc">デバイスの電力効率とCO2排出削減の可視化</span>
                     </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="sec5" class="tab-panel">
-        <div class="column-header"><h2>5. セキュリティ & コンプライアンス</h2></div>
+    <div id="sec5" class="tab-panel tab-content-slate">
         <div class="card-row-inner">
-            <div class="card highlight-security">
+            <div class="card">
                 <div class="card-header"><h3>セキュリティとコンプライアンス</h3></div>
                 <div class="card-content">
                     <a href="https://kanopy-full.us.nexthink.cloud/bus/2fd1c862-2622-4c9d-bdf9-138f82b10bf2/desktop/overview" class="nav-item" target="_blank">
@@ -453,7 +465,7 @@
                     </a>
                     <a href="https://kanopy-full.us.nexthink.cloud/dashboards/d5974da5-9467-4562-a084-494e925d0c1b" class="nav-item" target="_blank">
                         <span class="nav-title">🔍 怪しいバイナリ検出</span>
-                        <span class="nav-desc">製品名が不明、利用率が低いバイナリの検出</span>
+                        <span class="nav-desc">製品名不明、利用率が低いバイナリの検出</span>
                     </a>
                     <a href="https://kanopy-full.us.nexthink.cloud/dashboards/d35ce4c3-733d-47ab-85e3-6c4e7cc18313" class="nav-item" target="_blank">
                         <span class="nav-title">🕵️ Shadow IT 可視化</span>
@@ -461,24 +473,24 @@
                     </a>
                     <a href="https://kanopy-full.us.nexthink.cloud/dashboards/fa13ef0b-e1c8-41ef-9b95-4e793749099d" class="nav-item" target="_blank">
                         <span class="nav-title">✅ Windows OS コンプライアンス</span>
-                        <span class="nav-desc">パッチ適用状況等のガバナンス状況を包括的に確認</span>
+                        <span class="nav-desc">パッチ適用等のガバナンス状況を包括的に確認</span>
                     </a>
                 </div>
             </div>
-            <div class="card highlight-security">
+            <div class="card">
                 <div class="card-header"><h3>配信ツールの健全化</h3></div>
                 <div class="card-content">
                     <a href="https://kanopy-full.us.nexthink.cloud/workflows/5861e4c1-fea1-4846-83f8-6383e54a4a5e" class="nav-item" target="_blank">
                         <span class="nav-title">⚙️ Intune 自動修復 (ワークフロー) </span>
-                        <span class="nav-desc">Intune が本来動作する状況にするための自動ワークフロー</span>
+                        <span class="nav-desc">Intune を正常動作させるための自動ワークフロー</span>
                     </a>
-                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/b006e467-8bb4-4b0d-9955-a6cba77fbf13?context=time.from=7d,time.resolution=1d,v=1&tabId=X670CkQk" class="nav-item" target="_blank">
-                        <span class="nav-title">📊 MECM (SCCM) 健全性 (ダッシュボード) </span>
-                        <span class="nav-desc">MECM(SCCM)の健全性確認</span>
+                    <a href="https://kanopy-full.us.nexthink.cloud/dashboards/b006e467-8bb4-4b0d-9955-a6cba77fbf13" class="nav-item" target="_blank">
+                        <span class="nav-title">📊 MECM (SCCM) 健全性</span>
+                        <span class="nav-desc">MECM(SCCM)の健全性確認ダッシュボード</span>
                     </a>
                     <a href="https://kanopy-full.us.nexthink.cloud/workflows/5659f93c-f6ae-4683-8631-2476974363a0" class="nav-item" target="_blank">
                         <span class="nav-title">🛠️ MECM (SCCM) 自動修復 (ワークフロー)</span>
-                        <span class="nav-desc">MECM(SCCM)が本来動作する状況にするための自動ワークフロー</span>
+                        <span class="nav-desc">MECM を正常動作させるための自動ワークフロー</span>
                     </a>
                     <img src="image_925e00.jpg" alt="MECM Workflow Logic" class="workflow-image">
                 </div>
@@ -486,58 +498,43 @@
         </div>
     </div>
 
-    <div id="sec6" class="tab-panel">
-        <div class="column-header"><h2>6. その他ユースケース</h2></div>
-        <div class="card-row-inner">
-            <div class="card highlight-security">
-                <div class="card-header"><h3>カスタムコンテンツ</h3></div>
-                <div class="card-content">
-                    <a href="https://yk141574-creator.github.io/print/print.html" class="nav-item" target="_blank">
-                        <span class="nav-title">📄 印刷枚数の集計 (画面キャプチャ)</span>
-                        <span class="nav-desc">端末ごとの印刷状況の可視化</span>
-                    </a>
-                    <a href="https://yk141574-creator.github.io/networkdriver/%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%83%89%E3%83%A9%E3%82%A4%E3%83%90.png" class="nav-item" target="_blank">
-                        <span class="nav-title">📄 ネットワークドライバの可視化 (画面キャプチャ)</span>
-                        <span class="nav-desc">端末ごとのネットワークドライバの可視化</span>
-                    </a>
-                </div>
+    <div id="sec6" class="tab-panel tab-content-teal">
+        <div class="card">
+            <div class="card-header"><h3>カスタムコンテンツ</h3></div>
+            <div class="card-content">
+                <a href="https://yk141574-creator.github.io/print/print.html" class="nav-item" target="_blank">
+                    <span class="nav-title">📄 印刷枚数の集計 (画面キャプチャ)</span>
+                    <span class="nav-desc">端末ごとの印刷状況の可視化</span>
+                </a>
+                <a href="https://yk141574-creator.github.io/networkdriver/%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%83%89%E3%83%A9%E3%82%A4%E3%83%90.png" class="nav-item" target="_blank">
+                    <span class="nav-title">📄 ネットワークドライバの可視化 (画面キャプチャ)</span>
+                    <span class="nav-desc">端末ごとのネットワークドライバ可視化</span>
+                </a>
             </div>
-         </div>
+        </div>
     </div>
 
-    <div id="sec0" class="tab-panel">
-        <div class="column-header"><h2>0. 社内向け情報</h2></div>
-        <div class="card highlight-security">
+    <div id="sec0" class="tab-panel tab-content-info">
+        <div class="card">
             <div class="card-header"><h3>Amplify 事前設定</h3></div>
-            <span class="nav-desc">　</span>
-            <span class="nav-desc">　注)　4.『🛠️ チケット対応効率化(MTTR 短縮)』デモで必要な事前設定</span>
-            <span class="nav-desc">　</span>
-            <span class="nav-desc">　手順 1)　ブラウザに Amplify 拡張機能を追加</span>
-            <span class="nav-desc">　</span>
-            <span class="nav-desc">　手順 2)　Ampify の設定で以下を入力(Chromeの場合は「オプション」をクリック)</span>
-            <span class="nav-desc">　　　　　 ※「新しいインスタンスを追加」をクリックし、顧客名に「Kanopy」、URLに「https://kanopy-full.us.nexthink.cloud」を入力</span>
-            <span class="nav-desc">　　　　　 ※「Web アプリケーションを追加」をクリックし、URL に「https://yk141574-creator.github.io/ITSM/ITSM.html」、識別子のフィールド選択器で、
-            <span class="nav-desc">　　　　　　 「Delilah Kayley」を選択し「保存」をクリック</span>
-            <span class="nav-desc">　</span>
-            <span class="nav-desc">　手順 3)　「保存」をクリック</span>
-            <span class="nav-desc">　</span>
-            <span class="nav-desc">　手順 4)　「https://yk141574-creator.github.io/ITSM/ITSM.html」にアクセスして右下に「N」マークがでればOK</span>
-            <span class="nav-desc">　</span>
-            <div class="card-content"></div>
+            <div class="card-content">
+                <div class="instruction-box">
+                    <span class="step-text">1) ブラウザに Amplify 拡張機能を追加</span>
+                    <span class="step-text">2) インスタンス設定で 顧客名「Kanopy」、URL「https://kanopy-full.us.nexthink.cloud」を入力</span>
+                    <span class="step-text">3) Webアプリ設定で URL「https://yk141574-creator.github.io/ITSM/ITSM.html」、識別子フィールド「Delilah Kayley」を選択</span>
+                    <span class="step-text">4) 保存し、対象 URL で右下に「N」マークが出れば成功</span>
+                </div>
+            </div>
         </div>
-
-        <div class="card highlight-security">
+        <div class="card">
             <div class="card-header"><h3>Adopt 事前設定</h3></div>
-            <span class="nav-desc">　</span>
-            <span class="nav-desc">　注) 3.『🔀 認可 AI へのリダイレクトとユーザガイド』で必要な事前設定</span>
-            <span class="nav-desc">　</span>
-            <span class="nav-desc">　手順 1)　ブラウザの拡張機能で「Nexthink」または「Nexthink(Beta)」の右の3ポチをクリックし、「Tenants Configuration」を選択</span>
-            <span class="nav-desc">　</span>
-            <span class="nav-desc">　手順 2)　「Add Tenant」をクリックし、Name に「Kanopy」、URL に「https://kanopy-full.us.nexthink.cloud」を入力して保存</span>
-            <span class="nav-desc">　</span>
-            <span class="nav-desc">　手順 3)　追加したテナントの Authenticated が「yes」になっていれば OK</span>
-            <span class="nav-desc">　　　　　※もし yes になっていなければ、右の3ポチをクリックし「Authenticate」を実施</span>
-            <div class="card-content"></div>
+            <div class="card-content">
+                <div class="instruction-box">
+                    <span class="step-text">1) 拡張機能の「Tenants Configuration」を選択</span>
+                    <span class="step-text">2) 「Add Tenant」で Name「Kanopy」、URL「https://kanopy-full.us.nexthink.cloud」を保存</span>
+                    <span class="step-text">3) Authenticated が「yes」であることを確認 (要認証実施)</span>
+                </div>
+            </div>
         </div>
     </div>
 </main>
@@ -545,21 +542,32 @@
 <footer>ネクストシンク合同会社</footer>
 
 <script>
-function openTab(evt, tabId) {
+function openTab(evt, tabId, theme) {
     var i, tabpanel, tablinks;
+    
+    // Hide all panels
     tabpanel = document.getElementsByClassName("tab-panel");
     for (i = 0; i < tabpanel.length; i++) {
         tabpanel[i].style.display = "none";
         tabpanel[i].classList.remove("active");
     }
+    
+    // Remove active state from all buttons
     tablinks = document.getElementsByClassName("tab-button");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].classList.remove("active");
     }
-    document.getElementById(tabId).style.display = "block";
+    
+    // Update body class for active tab color
+    document.body.className = "active-" + theme;
+    
+    // Show current panel
+    var currentPanel = document.getElementById(tabId);
+    currentPanel.style.display = "block";
     setTimeout(function(){
-        document.getElementById(tabId).classList.add("active");
+        currentPanel.classList.add("active");
     }, 10);
+    
     evt.currentTarget.classList.add("active");
 }
 </script>
